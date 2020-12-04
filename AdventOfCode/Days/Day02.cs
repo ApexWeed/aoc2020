@@ -17,6 +17,11 @@ namespace AdventOfCode.Days
             Console.WriteLine(Part2());
         }
 
+        public void RunPart3()
+        {
+            throw new NotImplementedException();
+        }
+
         public static int Part1()
         {
             var passwords = Input.Select(i => new Schema(i));

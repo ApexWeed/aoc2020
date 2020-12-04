@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Linq;
+using System.Numerics;
 
 namespace AdventOfCode.Days
 {
@@ -16,6 +18,12 @@ namespace AdventOfCode.Days
             Console.WriteLine(Part2());
         }
 
+        public void RunPart3()
+        {
+            var bigInteger = Part3();
+            Console.WriteLine(bigInteger);
+        }
+
         public static int Part1()
         {
             var map = Input.Select(r => r.Select(c => c == '#').ToArray()).ToArray();
@@ -27,14 +35,22 @@ namespace AdventOfCode.Days
         {
             var map = Input.Select(r => r.Select(c => c == '#').ToArray()).ToArray();
 
-            var hits = new[] {(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)}.Select(pair =>
-            {
-                var (x, y) = pair;
-                return FindHits(map, x, y);
-            }).ToList();
+            var hits = new (int x, int y)[] {( 1, 1), (3, 1), (5, 1), (7, 1), (1, 2)}.Select(pair => FindHits(map, pair.x, pair.y));
 
             return hits.Aggregate(1L, (acc, i) => acc * i);
+        }
 
+        public static BigInteger Part3()
+        {
+            var map = File.ReadLines("bigboye.3.txt").Select(r => r.Select(c => c == '#').ToArray()).ToArray();
+            var xSlopes = new[] {2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 32, 36, 48, 54, 64};
+            var ySlopes = new[] {1, 5, 7, 11, 13, 17, 19, 23, 25, 29, 31, 35, 37, 41, 47};
+
+            var slopes = xSlopes.SelectMany(x => ySlopes.Select(y => (x, y)));
+
+            var hits = slopes.Select(pair => FindHits(map, pair.x, pair.y)).ToList();
+
+            return hits.Aggregate(BigInteger.One, (acc, i) => i * acc);
         }
 
         private static int FindHits(bool[][] map, int xSlope, int ySlope)

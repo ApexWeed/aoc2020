@@ -21,6 +21,11 @@ namespace AdventOfCode.Days
                 Console.WriteLine($"{upper} * {mid} * {lower} = {upper * mid * lower}");
         }
 
+        public void RunPart3()
+        {
+            throw new NotImplementedException();
+        }
+
         public static (int Lower, int Upper) Part1()
         {
             var sorted = Input.OrderByDescending(i => i).ToArray();
