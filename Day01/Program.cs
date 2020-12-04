@@ -3,18 +3,18 @@ using System.Linq;
 
 namespace Day01
 {
-    class Program
+    public class Program
     {
         private static void Main()
         {
-            var sorted = _input.OrderByDescending(i => i).ToArray();
-            var inverted = sorted.Reverse().ToArray();
-            Part1(sorted, inverted);
-            Part2(sorted, inverted);
+            Part1();
+            Part2();
         }
 
-        private static void Part1(int[] sorted, int[] inverted)
+        public static (int, int) Part1()
         {
+            var sorted = Input.OrderByDescending(i => i).ToArray();
+            var inverted = sorted.Reverse().ToArray();
             var iterations = 0;
             foreach (var upper in sorted)
             {
@@ -24,17 +24,21 @@ namespace Day01
                     if (upper + lower == 2020)
                     {
                         Console.WriteLine($"{upper} * {lower} = {upper * lower}  ({iterations} iterations)");
-                        return;
+                        return (lower, upper);
                     }
 
                     if (upper + lower > 2020)
                         break;
                 }
             }
+
+            throw new ArgumentException();
         }
 
-        private static void Part2(int[] sorted, int[] inverted)
+        public static (int, int, int) Part2()
         {
+            var sorted = Input.OrderByDescending(i => i).ToArray();
+            var inverted = sorted.Reverse().ToArray();
             var iterations = 0;
             var min = inverted.First();
             foreach (var upper in sorted)
@@ -50,7 +54,7 @@ namespace Day01
                         if (upper + mid + lower == 2020)
                         {
                             Console.WriteLine($"{upper} * {mid} * {lower} = {upper * mid * lower} ({iterations} iterations)");
-                            return;
+                            return (lower, mid, upper);
                         }
 
                         if (upper + mid + lower > 2020)
@@ -59,10 +63,10 @@ namespace Day01
                 }
             }
 
-            Console.WriteLine("fuck");
+            throw new ArgumentException();
         }
 
-        private static int[] _input = {
+        public static readonly int[] Input = {
                 1779,
                 1737,
                 1537,
