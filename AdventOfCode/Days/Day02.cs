@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -17,9 +18,12 @@ namespace AdventOfCode.Days
             Console.WriteLine(Part2());
         }
 
-        public void RunPart3()
+        public void RunPart3(Action<Action> runner)
         {
-            throw new NotImplementedException();
+            var passwords = File.ReadLines("bigboye.2.txt").Select(i => new Schema(i)).ToList();
+
+            runner(() => Console.WriteLine(passwords.Count(p => p.Validate1())));
+            runner(() => Console.WriteLine(passwords.Count(p => p.Validate2())));
         }
 
         public static int Part1()

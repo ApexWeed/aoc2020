@@ -18,10 +18,9 @@ namespace AdventOfCode.Days
             Console.WriteLine(Part2());
         }
 
-        public void RunPart3()
+        public void RunPart3(Action<Action> runner)
         {
-            var bigInteger = Part3();
-            Console.WriteLine(bigInteger);
+            runner(() => Console.WriteLine(Part3()));
         }
 
         public static int Part1()

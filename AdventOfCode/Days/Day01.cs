@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 
 namespace AdventOfCode.Days
@@ -9,35 +10,47 @@ namespace AdventOfCode.Days
 
         public void RunPart1(bool silent)
         {
-            var (lower, upper) = Part1();
+            var (lower, upper) = Part1(Input, 2020);
             if (!silent)
                 Console.WriteLine($"{upper} * {lower} = {upper * lower}");
         }
 
         public void RunPart2(bool silent)
         {
-            var (lower, mid, upper) = Part2();
+            var (lower, mid, upper) = Part2(Input, 2020);
             if (!silent)
                 Console.WriteLine($"{upper} * {mid} * {lower} = {upper * mid * lower}");
         }
 
-        public void RunPart3()
+        public void RunPart3(Action<Action> runner)
         {
-            throw new NotImplementedException();
+            var input = File.ReadLines("bigboye.1.txt").Select(int.Parse).ToArray();
+
+            runner(() =>
+            {
+                var (lower, upper) = Part1(input, 99920044);
+                Console.WriteLine($"{lower} * {upper} = {lower * upper}");
+            });
+
+            runner(() =>
+            {
+                var (lower, mid, upper) = Part2(input, 99920044);
+                Console.WriteLine($"{lower} * {mid} * {upper} = {lower * mid * upper}");
+            });
         }
 
-        public static (int Lower, int Upper) Part1()
+        public static (int Lower, int Upper) Part1(int[] input, int target)
         {
-            var sorted = Input.OrderByDescending(i => i).ToArray();
+            var sorted = input.OrderByDescending(i => i).ToArray();
             var inverted = sorted.Reverse().ToArray();
             foreach (var upper in sorted)
             {
                 foreach (var lower in inverted)
                 {
-                    if (upper + lower == 2020)
+                    if (upper + lower == target)
                         return (lower, upper);
 
-                    if (upper + lower > 2020)
+                    if (upper + lower > target)
                         break;
                 }
             }
@@ -45,24 +58,24 @@ namespace AdventOfCode.Days
             throw new Exception("no matching values found");
         }
 
-        public static (int Lower, int Mid, int Upper) Part2()
+        public static (int Lower, int Mid, int Upper) Part2(int[] input, int target)
         {
-            var sorted = Input.OrderByDescending(i => i).ToArray();
+            var sorted = input.OrderByDescending(i => i).ToArray();
             var inverted = sorted.Reverse().ToArray();
             var min = inverted.First();
             foreach (var upper in sorted)
             {
                 foreach (var lower in inverted)
                 {
-                    if (upper + lower + min > 2020)
+                    if (upper + lower + min > target)
                         continue;
 
                     foreach (var mid in inverted)
                     {
-                        if (upper + mid + lower == 2020)
+                        if (upper + mid + lower == target)
                             return (lower, mid, upper);
 
-                        if (upper + mid + lower > 2020)
+                        if (upper + mid + lower > target)
                             break;
                     }
                 }

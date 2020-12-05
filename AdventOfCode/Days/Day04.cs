@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -21,33 +22,35 @@ namespace AdventOfCode.Days
             Console.WriteLine(valid);
         }
 
-        public void RunPart3()
+        public void RunPart3(Action<Action> runner)
         {
-            throw new System.NotImplementedException();
+            var passports = GetPassports(File.ReadLines("bigboye.4.txt"));
+            runner(() => Console.WriteLine(Part1(passports)));
+            runner(() => Console.WriteLine(Part2(passports)));
         }
 
-        public static int Part1()
+        public static int Part1(List<Passport> passports = default)
         {
-            var passports = GetPassports();
+            passports ??= GetPassports();
 
             var valid = passports.Count(p => p.Validate());
             return valid;
         }
 
-        public static int Part2()
+        public static int Part2(List<Passport> passports = default)
         {
-            var passports = GetPassports();
+            passports ??= GetPassports();
 
             var valid = passports.Count(p => p.StrictValidate());
             return valid;
         }
 
-        private static List<Passport> GetPassports()
+        private static List<Passport> GetPassports(IEnumerable<string> source = default)
         {
             var passports = new List<Passport>();
             var current = new Passport();
 
-            foreach (var line in Input)
+            foreach (var line in source ?? Input)
             {
                 if (line == string.Empty)
                 {
@@ -67,7 +70,7 @@ namespace AdventOfCode.Days
             return passports;
         }
 
-        private class Passport
+        public class Passport
         {
             public Dictionary<string, string> Fields { get; set; } = new();
 

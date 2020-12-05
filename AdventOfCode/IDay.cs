@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace AdventOfCode
 {
     public interface IDay
@@ -5,6 +8,8 @@ namespace AdventOfCode
         int Day { get; }
         void RunPart1(bool silent);
         void RunPart2(bool silent);
-        void RunPart3();
+
+        void RunPart3(Action<Action> timer)
+        { }
     }
 }

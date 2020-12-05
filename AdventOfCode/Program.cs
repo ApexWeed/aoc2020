@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -49,16 +50,16 @@ namespace AdventOfCode
         private static void Run(IDay day, bool bigBoye)
         {
             Console.WriteLine($"Day {day.Day}...");
-            var part1Duration = Duration(() => day.RunPart1(false));
-            var part2Duration = Duration(() => day.RunPart2(false));
+            var durations = new List<double>
+            {
+                Duration(() => day.RunPart1(false)),
+                Duration(() => day.RunPart2(false)),
+            };
 
-            Console.WriteLine($"Duration {part1Duration}ms {part2Duration}ms");
+            if (bigBoye)
+                day.RunPart3(task => durations.Add(Duration(task)));
 
-            if (!bigBoye)
-                return;
-
-            Console.WriteLine($"Day {day.Day} bigboye...");
-            Console.WriteLine($"Duration {Duration(day.RunPart3)}ms");
+            Console.WriteLine($"Duration {string.Join(" ", durations.Select(d => $"{d}ms"))}");
         }
 
         private static double Duration(Action action)

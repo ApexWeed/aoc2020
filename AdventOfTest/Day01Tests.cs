@@ -8,7 +8,7 @@ namespace AdventOfTest
         [Fact]
         public void Part1()
         {
-            var (lower, upper) = Day01.Part1();
+            var (lower, upper) = Day01.Part1(Day01.Input, 2020);
 
             Assert.Equal(2020, lower + upper);
 
@@ -18,7 +18,7 @@ namespace AdventOfTest
         [Fact]
         public void Part2()
         {
-            var (lower, mid, upper) = Day01.Part2();
+            var (lower, mid, upper) = Day01.Part2(Day01.Input, 2020);
 
             Assert.Equal(2020, lower + mid + upper);
 

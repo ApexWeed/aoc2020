@@ -57,11 +57,6 @@ namespace AdventOfCode.Days
             throw new ArgumentException("no valid solution for input");
         }
 
-        public void RunPart3()
-        {
-            throw new NotImplementedException();
-        }
-
         public static string[] Input =
         {
             "BBBFBFFRLR",
