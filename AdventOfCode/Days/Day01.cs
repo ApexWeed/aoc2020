@@ -22,17 +22,17 @@ namespace AdventOfCode.Days
                 Console.WriteLine($"{upper} * {mid} * {lower} = {upper * mid * lower}");
         }
 
-        public void RunPart3(Action<Action> runner)
+        public void RunPart3(Action<Action> timer)
         {
             var input = File.ReadLines("bigboye.1.txt").Select(int.Parse).ToArray();
 
-            runner(() =>
+            timer(() =>
             {
                 var (lower, upper) = Part1(input, 99920044);
                 Console.WriteLine($"{lower} * {upper} = {lower * upper}");
             });
 
-            runner(() =>
+            timer(() =>
             {
                 var (lower, mid, upper) = Part2(input, 99920044);
                 Console.WriteLine($"{lower} * {mid} * {upper} = {lower * mid * upper}");

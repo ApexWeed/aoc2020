@@ -18,9 +18,9 @@ namespace AdventOfCode.Days
             Console.WriteLine(Part2());
         }
 
-        public void RunPart3(Action<Action> runner)
+        public void RunPart3(Action<Action> timer)
         {
-            runner(() => Console.WriteLine(Part3()));
+            timer(() => Console.WriteLine(Part3()));
         }
 
         public static int Part1()

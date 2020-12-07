@@ -22,11 +22,11 @@ namespace AdventOfCode.Days
             Console.WriteLine(valid);
         }
 
-        public void RunPart3(Action<Action> runner)
+        public void RunPart3(Action<Action> timer)
         {
             var passports = GetPassports(File.ReadLines("bigboye.4.txt"));
-            runner(() => Console.WriteLine(Part1(passports)));
-            runner(() => Console.WriteLine(Part2(passports)));
+            timer(() => Console.WriteLine(Part1(passports)));
+            timer(() => Console.WriteLine(Part2(passports)));
         }
 
         public static int Part1(List<Passport> passports = default)

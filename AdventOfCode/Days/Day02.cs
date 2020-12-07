@@ -18,12 +18,12 @@ namespace AdventOfCode.Days
             Console.WriteLine(Part2());
         }
 
-        public void RunPart3(Action<Action> runner)
+        public void RunPart3(Action<Action> timer)
         {
             var passwords = File.ReadLines("bigboye.2.txt").Select(i => new Schema(i)).ToList();
 
-            runner(() => Console.WriteLine(passwords.Count(p => p.Validate1())));
-            runner(() => Console.WriteLine(passwords.Count(p => p.Validate2())));
+            timer(() => Console.WriteLine(passwords.Count(p => p.Validate1())));
+            timer(() => Console.WriteLine(passwords.Count(p => p.Validate2())));
         }
 
         public static int Part1()

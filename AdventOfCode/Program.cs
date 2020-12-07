@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -56,7 +57,7 @@ namespace AdventOfCode
                 Duration(() => day.RunPart2(false)),
             };
 
-            if (bigBoye)
+            if (bigBoye && File.Exists($"bigboye.{day.Day}.txt"))
                 day.RunPart3(task => durations.Add(Duration(task)));
 
             Console.WriteLine($"Duration {string.Join(" ", durations.Select(d => $"{d}ms"))}");

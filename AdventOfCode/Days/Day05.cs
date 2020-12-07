@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode.Days
 {
@@ -16,17 +16,24 @@ namespace AdventOfCode.Days
 
         public static int Part1()
         {
-            var max = 0;
-            foreach (var line in Input)
-            {
-                var row = Convert.ToByte(line[..7].Replace("F", "0").Replace("B", "1").PadLeft(8, '0'), 2);
-                var column = Convert.ToByte(line[7..].Replace("L", "0").Replace("R", "1").PadLeft(8, '0'), 2);
+            var maxSeat = Input.Select(l =>
+                               {
+                                   var value = 0;
+                                   foreach (var c in l)
+                                   {
+                                       value <<= 1;
+                                       switch (c)
+                                       {
+                                           case 'B':
+                                           case 'R':
+                                               value |= 1;
+                                               break;
+                                       }
+                                   }
 
-                if (row * 8 + column > max)
-                    max = row * 8 + column;
-            }
-
-            return max;
+                                   return value;
+                               }).Max();
+            return maxSeat;
         }
 
         public void RunPart2(bool silent)
@@ -38,14 +45,23 @@ namespace AdventOfCode.Days
 
         public static int Part2()
         {
-            var used = new List<(int Row, int Column)>();
-            foreach (var line in Input)
+            var used = Input.Select(l =>
             {
-                var row = Convert.ToByte(line[..7].Replace("F", "0").Replace("B", "1").PadLeft(8, '0'), 2);
-                var column = Convert.ToByte(line[7..].Replace("L", "0").Replace("R", "1").PadLeft(8, '0'), 2);
+                var value = 0;
+                foreach (var c in l)
+                {
+                    value <<= 1;
+                    switch (c)
+                    {
+                        case 'B':
+                        case 'R':
+                            value |= 1;
+                            break;
+                    }
+                }
 
-                used.Add((row, column));
-            }
+                return (value >> 3, value & 0b111);
+            }).ToHashSet();
 
             for (var row = 1; row < 127; row++)
             for (var column = 0; column < 8; column++)
